@@ -5,11 +5,14 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "ruby-regress"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{CLI tool for computing correlation (Pearson's r)}
+    gem.description = %Q{Ruby implementation of Gary Perlman's `regress` tool from (the difficult to obtain) |STAT package.}
     gem.email = "doches@gmail.com"
     gem.homepage = "http://github.com/doches/ruby-regress"
     gem.authors = ["Trevor Fountain"]
+    gem.bindir = "bin"
+    gem.executables = %w{regress}
+    gem.add_development_dependency('wrong','>=0.2.0')
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new

@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+
+# Reads a file containing two whitespace-delimited columns of numerical data
+# and outputs Pearson's r and some assorted descriptive statistics.
+#
+# A partial drop-in replacement for |STAT's `regress` tool, with caveats:
+#
+#    + Does not compute SEest, F(), or prob()
+#    + Only handles two variables (no more!)
+#    + Does not calculate regression line, because I don't need it.
+#
+# ...and extra features:
+#
+#    + Ignores comment lines (lines starting with '#')
+#    + Ignores anything on a line /after/ a '#'
+
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__),"..","lib")
+require 'ruby-regress'
+
+input = []
+STDIN.each_line do |line|
+  cols = line.strip.gsub(/#.+$/,'').split(/\s/).map { |x| x.to_f }
+	input.push cols if cols.size == 2
+end
+a,b = *[0,1].map { |i| input.collect { |x| x[i] } }
+
+regress = Regress.new(a,b)
+puts "Analysis for #{a.size} cases of 2 variables:"
+puts "Variable          REG          A "
+puts "Min#{sprintf("%18.4f",Regress.min(a))}#{sprintf("%11.4f ",Regress.min(b))}"
+puts "Max#{sprintf("%18.4f",Regress.max(a))}#{sprintf("%11.4f ",Regress.max(b))}"
+puts "Sum#{sprintf("%18.4f",Regress.sum(a))}#{sprintf("%11.4f ",Regress.sum(b))}"
+puts "Mean#{sprintf("%17.4f",Regress.mean(a))}#{sprintf("%11.4f ",Regress.mean(b))}"
+puts "SD#{sprintf("%19.4f",Regress.standard_deviation(a))}#{sprintf("%11.4f ",Regress.standard_deviation(b))}"
+puts ""
+puts "Correlation Matrix:"
+puts "REG            1.0000 "
+puts "A              #{sprintf("%1.4f",regress.r)}     1.0000 "
+puts "Variable          REG          A"
+puts ""
+#puts "Regression Equation for REG:"
+#puts "REG  =#{sprintf("%3.3f",Regress.slope)} A  +#{sprintf("%4.4f",Regress.intercept)}"
+#puts ""
+puts "Significance test for prediction of REG"
+puts "    Mult-R  R-Squared "
+puts " #{sprintf("%9.4f",regress.r)}  #{sprintf("%9.4f",regress.r**2)} "
