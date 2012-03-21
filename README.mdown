@@ -4,9 +4,28 @@
 `ruby-regress` is a tool for computing correlations and regression equations
 from two-variable input. It is designed to function as a drop-in replacement
 for Gary Perlman's `regress`, at least for those who use only the basic
-functionality that `regress` provides...
+functionality that `regress` provides.
 
+## Why!?
+
+The problem with Gary Perlman's excellent |STAT programs is twofold: 
+
+   + The only way of obtaining a copy is by emailing Perlman and asking for it.
+   + The distribution of modified copies is [expressely forbidden](http://oldwww.acm.org/perlman/stat/history.html#conditions).
+
+If you need bulletproof robustness you're probably better off dealing with Perlman's terms of access and using |STAT; if you want ease of installation, try `ruby-regress`.
 ## Installation
+
+#### From rubygems
+
+If you're using Gemcutter.org as a your gem host (hint: you almost certainly are) you can 
+install ruby-regress using rubygems:
+
+    gem install ruby-regress
+    
+which installs the `regress` executable.
+
+#### From source
 
 Download the most recent source from Github:
 

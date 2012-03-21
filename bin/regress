@@ -19,28 +19,44 @@ require 'ruby-regress'
 
 input = []
 STDIN.each_line do |line|
-  cols = line.strip.gsub(/#.+$/,'').split(/\s/).map { |x| x.to_f }
-	input.push cols if cols.size == 2
+	cols = line.strip.gsub(/#.+$/,'').split(/\s/).map { |x| x.to_f }
+	input.push cols
 end
-a,b = *[0,1].map { |i| input.collect { |x| x[i] } }
+if input[0].size == 1 # Single column, stats only
+	a = input.flatten
+	puts "Analysis for #{a.size} cases of 1 variable:"
+	puts "Variable          A"
+	puts "Min#{sprintf("%18.4f",Regress.min(a))}"
+	puts "Max#{sprintf("%18.4f",Regress.max(a))}"
+	puts "Sum#{sprintf("%18.4f",Regress.sum(a))}"
+	puts "Mean#{sprintf("%17.4f",Regress.mean(a))}"
+	puts "SD#{sprintf("%19.4f",Regress.standard_deviation(a))}"
+elsif input[0].size == 2 # Two column, stats + regression
+	a,b = *[0,1].map { |i| input.collect { |x| x[i] } }
 
-regress = Regress.new(a,b)
-puts "Analysis for #{a.size} cases of 2 variables:"
-puts "Variable          REG          A "
-puts "Min#{sprintf("%18.4f",Regress.min(a))}#{sprintf("%11.4f ",Regress.min(b))}"
-puts "Max#{sprintf("%18.4f",Regress.max(a))}#{sprintf("%11.4f ",Regress.max(b))}"
-puts "Sum#{sprintf("%18.4f",Regress.sum(a))}#{sprintf("%11.4f ",Regress.sum(b))}"
-puts "Mean#{sprintf("%17.4f",Regress.mean(a))}#{sprintf("%11.4f ",Regress.mean(b))}"
-puts "SD#{sprintf("%19.4f",Regress.standard_deviation(a))}#{sprintf("%11.4f ",Regress.standard_deviation(b))}"
-puts ""
-puts "Correlation Matrix:"
-puts "REG            1.0000 "
-puts "A              #{sprintf("%1.4f",regress.r)}     1.0000 "
-puts "Variable          REG          A"
-puts ""
-#puts "Regression Equation for REG:"
-#puts "REG  =#{sprintf("%3.3f",Regress.slope)} A  +#{sprintf("%4.4f",Regress.intercept)}"
-#puts ""
-puts "Significance test for prediction of REG"
-puts "    Mult-R  R-Squared "
-puts " #{sprintf("%9.4f",regress.r)}  #{sprintf("%9.4f",regress.r**2)} "
+	regress = Regress.new(a,b)
+	puts "Analysis for #{a.size} cases of 2 variables:"
+	puts "Variable          REG          A "
+	puts "Min#{sprintf("%18.4f",Regress.min(a))}#{sprintf("%11.4f ",Regress.min(b))}"
+	puts "Max#{sprintf("%18.4f",Regress.max(a))}#{sprintf("%11.4f ",Regress.max(b))}"
+	puts "Sum#{sprintf("%18.4f",Regress.sum(a))}#{sprintf("%11.4f ",Regress.sum(b))}"
+	puts "Mean#{sprintf("%17.4f",Regress.mean(a))}#{sprintf("%11.4f ",Regress.mean(b))}"
+	puts "SD#{sprintf("%19.4f",Regress.standard_deviation(a))}#{sprintf("%11.4f ",Regress.standard_deviation(b))}"
+	puts ""
+	puts "Correlation Matrix:"
+	puts "REG            1.0000 "
+	puts "A              #{sprintf("%1.4f",regress.r)}     1.0000 "
+	puts "Variable          REG          A"
+	puts ""
+	#puts "Regression Equation for REG:"
+	#puts "REG  =#{sprintf("%3.3f",Regress.slope)} A  +#{sprintf("%4.4f",Regress.intercept)}"
+	#puts ""
+	puts "Significance test for prediction of REG"
+	puts "    Mult-R  R-Squared "
+	puts " #{sprintf("%9.4f",regress.r)}  #{sprintf("%9.4f",regress.r**2)} "
+else
+	STDERR.puts "> 2 column input not supported."
+	STDERR.puts ""
+	STDERR.puts "Sorry."
+	exit(1)
+end

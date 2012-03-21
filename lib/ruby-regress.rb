@@ -2,15 +2,19 @@ class Regress
   attr_reader :r, :slope, :intercept
   
   # Create a Regress object from two vectors +a+ and +b+. Note that +a+ and +b+ must be of the same length.
-  def initialize(a,b)
-    raise "Regress#initialize expects two vectors of equal length (given vectors of lengths #{a.size}, #{b.size})." if a.size != b.size
-    
-    sa,sb = *[a,b].map { |d| Regress.sum(d) }
-    sa2,sb2 = *[a,b].map { |d| Regress.sum(Regress.square(d)) }
-    sab = Regress.multiply(a,b)
-    n = a.size
-    
-    @r = (n * sab - sa * sb) / (( (n * sa2 - sa**2) * (n * sb2 - sb**2) ) ** 0.5)
+  def initialize(a,b=nil)
+    if b.nil?
+      # Don't do regression if we're only given one item
+    else
+      raise "Regress#initialize expects two vectors of equal length (given vectors of lengths #{a.size}, #{b.size})." if a.size != b.size
+      
+      sa,sb = *[a,b].map { |d| Regress.sum(d) }
+      sa2,sb2 = *[a,b].map { |d| Regress.sum(Regress.square(d)) }
+      sab = Regress.multiply(a,b)
+      n = a.size
+      
+      @r = (n * sab - sa * sb) / (( (n * sa2 - sa**2) * (n * sb2 - sb**2) ) ** 0.5)
+    end
   end
   
   def Regress.sum(vector)
