@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Ruby-regress by doches</title>
+    
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Ruby-regress</h1>
+        <p>A command-line tool &amp; Ruby class for computing Pearson's r and other stats</p>
+        <p class="view"><a href="https://github.com/doches/ruby-regress">View the Project on GitHub <small>doches/ruby-regress</small></a></p>
+        <ul>
+          <li><a href="https://github.com/doches/ruby-regress/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/doches/ruby-regress/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/doches/ruby-regress">Fork On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>ruby-regress</h1>
+
+<h3>A partial drop-in replacement for |STAT's regress</h3>
+
+<p><code>ruby-regress</code> is a tool for computing correlations and regression equations
+from two-variable input. It is designed to function as a drop-in replacement
+for Gary Perlman's <code>regress</code>, at least for those who use only the basic
+functionality that <code>regress</code> provides.</p>
+
+<h2>Why!?</h2>
+
+<p>The problem with Gary Perlman's excellent |STAT programs is twofold: </p>
+
+<ul>
+<li>The only way of obtaining a copy is by emailing Perlman and asking for it.</li>
+<li>The distribution of modified copies is <a href="http://oldwww.acm.org/perlman/stat/history.html#conditions">expressely forbidden</a>.</li>
+</ul><p>If you need bulletproof robustness you're probably better off dealing with Perlman's terms of access and using |STAT; if you want ease of installation, try <code>ruby-regress</code>.</p>
+
+<h2>Installation</h2>
+
+<h4>From rubygems</h4>
+
+<p>Installing ruby-regress using rubygems is absurdly easy:</p>
+
+<pre><code>gem install ruby-regress
+</code></pre>
+
+<p>which installs the <code>regress</code> executable.</p>
+
+<h4>From source</h4>
+
+<p>Download the most recent source from Github:</p>
+
+<pre><code>git clone git://github.com/doches/ruby-regress.git
+</code></pre>
+
+<p>then build and install the gem:</p>
+
+<pre><code>cd ruby-regress
+rake build
+sudo rake install
+</code></pre>
+
+<h2>Usage</h2>
+
+<p>ruby-regress installs a single command line tool called <code>regress</code>, which
+reads from <code>STDIN</code> and prints a report containing the correlation coefficient,
+plus some descriptive statistics, to <code>STDOUT</code>. For example, if we have a file in
+the current directory called <code>data.txt</code> containing two datasets:</p>
+
+<pre><code>1   12.0
+2   11.0
+3   13.0
+4   14.0
+</code></pre>
+
+<p>we can get the correlation coefficient between these two variables by:</p>
+
+<pre><code>regress &lt; data.txt
+</code></pre>
+
+<p>which will dump a load of statistical information about the datasets to
+the terminal.</p>
+
+<h2>Limitations</h2>
+
+<p>ruby-regress only understands one- or two-column input. Give it two columns and you'll get a regression plus some descriptive stats (mean, range, &amp;c); give it a single column of input and you'll only get the descriptive stats. </p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/doches">doches</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+  </body>
+</html>
