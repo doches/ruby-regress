@@ -14,6 +14,7 @@ class Regress
       n = a.size
       
       @r = (n * sab - sa * sb) / (( (n * sa2 - sa**2) * (n * sb2 - sb**2) ) ** 0.5)
+      @r = 0.0 if @r.nan?
     end
   end
   
